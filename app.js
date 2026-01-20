@@ -1072,3 +1072,43 @@ class App {
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new App();
 });
+
+// ... (todo el código anterior permanece igual) ...
+
+// Registrar Service Worker para PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+                console.log('Service Worker registrado con éxito:', registration.scope);
+                
+                // Verificar actualizaciones
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    console.log('Nueva versión del Service Worker encontrada:', newWorker);
+                    
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('Nueva versión lista. Recarga para actualizar.');
+                            // Puedes mostrar un banner al usuario aquí
+                        }
+                    });
+                });
+            })
+            .catch(error => {
+                console.log('Error al registrar el Service Worker:', error);
+            });
+    });
+}
+
+// Verificar si la app está instalada
+window.addEventListener('beforeinstallprompt', (event) => {
+    console.log('✅ PWA puede ser instalada');
+    // Puedes guardar el evento y mostrar un botón de instalación
+    window.deferredPrompt = event;
+});
+
+window.addEventListener('appinstalled', (event) => {
+    console.log('🎉 App instalada exitosamente!');
+    window.deferredPrompt = null;
+});
