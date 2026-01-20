@@ -1,4 +1,4 @@
-const CACHE_NAME = 'event-manager-kpop-v2';
+const CACHE_NAME = 'event-manager-kpop-v1';
 const urlsToCache = [
     './',
     './index.html',
@@ -7,17 +7,16 @@ const urlsToCache = [
     './manifest.json',
     './icon-32x32.png',
     './icon-192x192.png',
-    './icon-512x512.png',
-    './favicon.ico'
+    './icon-512x512.png'
 ];
 
 // Install Service Worker
 self.addEventListener('install', event => {
-    console.log('Service Worker: Instalando...');
+    console.log('[Service Worker] Instalando...');
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                console.log('Service Worker: Cacheando archivos');
+                console.log('[Service Worker] Cacheando archivos');
                 return cache.addAll(urlsToCache);
             })
             .then(() => self.skipWaiting())
@@ -26,14 +25,14 @@ self.addEventListener('install', event => {
 
 // Activate Service Worker
 self.addEventListener('activate', event => {
-    console.log('Service Worker: Activando...');
+    console.log('[Service Worker] Activando...');
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
-                cacheNames.map(cache => {
-                    if (cache !== CACHE_NAME) {
-                        console.log('Service Worker: Limpiando cache viejo');
-                        return caches.delete(cache);
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        console.log('[Service Worker] Eliminando cache antiguo:', cacheName);
+                        return caches.delete(cacheName);
                     }
                 })
             );
@@ -42,47 +41,44 @@ self.addEventListener('activate', event => {
     return self.clients.claim();
 });
 
-// Fetch Strategy: Cache First, fallback a Network
+// Fetch Strategy: Cache First, then Network
 self.addEventListener('fetch', event => {
-    // No cachear solicitudes a la API o recursos dinámicos
-    if (event.request.url.includes('/api/') || 
-        event.request.method !== 'GET') {
-        return fetch(event.request);
-    }
+    // Solo cachear solicitudes GET
+    if (event.request.method !== 'GET') return;
     
     event.respondWith(
         caches.match(event.request)
-            .then(response => {
-                // Si está en cache, devolverlo
-                if (response) {
-                    return response;
+            .then(cachedResponse => {
+                // Return cached version if available
+                if (cachedResponse) {
+                    return cachedResponse;
                 }
                 
-                // Si no está en cache, hacer fetch
-                return fetch(event.request)
-                    .then(fetchResponse => {
-                        // Verificar si la respuesta es válida
-                        if (!fetchResponse || fetchResponse.status !== 200 || 
-                            fetchResponse.type !== 'basic') {
-                            return fetchResponse;
-                        }
-                        
-                        // Clonar la respuesta
-                        const responseToCache = fetchResponse.clone();
-                        
-                        // Agregar al cache
-                        caches.open(CACHE_NAME)
-                            .then(cache => {
-                                cache.put(event.request, responseToCache);
-                            });
-                        
-                        return fetchResponse;
-                    })
-                    .catch(error => {
-                        console.log('Fetch failed; returning offline page:', error);
-                        // Puedes devolver una página offline personalizada aquí
-                        return caches.match('./index.html');
-                    });
+                // Clone the request
+                const fetchRequest = event.request.clone();
+                
+                // Make network request
+                return fetch(fetchRequest).then(response => {
+                    // Check if valid response
+                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                        return response;
+                    }
+                    
+                    // Clone the response
+                    const responseToCache = response.clone();
+                    
+                    // Cache the new response
+                    caches.open(CACHE_NAME)
+                        .then(cache => {
+                            cache.put(event.request, responseToCache);
+                        });
+                    
+                    return response;
+                })
+                .catch(error => {
+                    console.log('[Service Worker] Fetch failed:', error);
+                    // Puedes devolver una página offline aquí si lo deseas
+                });
             })
     );
 });
