@@ -1,23 +1,26 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-}
-
 :root {
-    --primary-color: #dc2626;
-    --primary-light: #fef2f2;
+    --primary-color: #9c27b0; /* Morado vibrante */
+    --primary-dark: #7b1fa2;
+    --primary-light: #e1bee7;
+    --secondary-color: #f06292; /* Rosa K-Pop */
+    --secondary-dark: #ec407a;
+    --accent-color: #2196f3; /* Azul brillante */
+    --accent-dark: #1976d2;
+    --gradient-primary: linear-gradient(135deg, #9c27b0, #f06292);
+    --gradient-secondary: linear-gradient(135deg, #f06292, #2196f3);
     --white: #ffffff;
+    --light-bg: #f8f4ff; /* Fondo lila suave */
     --gray: #f5f5f5;
-    --gray-dark: #737373;
-    --shadow: 0 2px 8px rgba(0,0,0,0.1);
-    --shadow-hover: 0 4px 12px rgba(220, 38, 38, 0.2);
+    --gray-dark: #757575;
+    --shadow: 0 2px 12px rgba(156, 39, 176, 0.15);
+    --shadow-hover: 0 4px 20px rgba(156, 39, 176, 0.25);
+    --shadow-card: 0 4px 15px rgba(240, 98, 146, 0.2);
+    --border-glow: 0 0 15px rgba(156, 39, 176, 0.3);
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--white);
+    background: linear-gradient(135deg, #f8f4ff 0%, #f0f4ff 100%);
     color: #333;
     line-height: 1.6;
     overflow-x: hidden;
@@ -25,137 +28,103 @@ body {
     position: relative;
 }
 
-/* Animaciones globales */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
+/* Nuevas animaciones K-Pop */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
     }
     50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
+        box-shadow: 0 0 20px rgba(156, 39, 176, 0.8), 0 0 30px rgba(240, 98, 146, 0.6);
     }
 }
 
-@keyframes bounce {
+@keyframes colorShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes shine {
+    0% {
+        background-position: -100px;
+    }
+    100% {
+        background-position: 200px;
+    }
+}
+
+@keyframes kpopBounce {
     0%, 100% {
         transform: translateY(0);
     }
+    25% {
+        transform: translateY(-10px);
+    }
     50% {
+        transform: translateY(0);
+    }
+    75% {
         transform: translateY(-5px);
     }
 }
 
-@keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    10%, 30%, 50%, 70%, 90% {
-        transform: translateX(-2px);
-    }
-    20%, 40%, 60%, 80% {
-        transform: translateX(2px);
-    }
-}
-
-@keyframes confettiRain {
-    0% {
-        transform: translateY(-100vh) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-@keyframes sparkle {
+@keyframes sparkleStar {
     0%, 100% {
         transform: scale(1);
         opacity: 1;
     }
     50% {
         transform: scale(1.5);
-        opacity: 0.5;
+        opacity: 0.7;
     }
 }
 
-/* Clases de animación */
-.pulse-animation {
-    animation: pulse 2s infinite;
+/* Clases de animación K-Pop */
+.glow-animation {
+    animation: glow 2s infinite;
 }
 
-.bounce-animation {
-    animation: bounce 1s infinite;
+.color-shift {
+    background: linear-gradient(90deg, #9c27b0, #f06292, #2196f3, #9c27b0);
+    background-size: 300% 300%;
+    animation: colorShift 4s ease infinite;
 }
 
-.slide-in {
-    animation: slideIn 0.5s ease-out;
+.kpop-bounce {
+    animation: kpopBounce 0.8s ease;
 }
 
-.fade-in {
-    animation: fadeIn 0.5s ease-out;
+.shine-effect {
+    position: relative;
+    overflow: hidden;
 }
 
-.shake-animation {
-    animation: shake 0.5s;
+.shine-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    animation: shine 3s infinite;
 }
 
-.animated-btn {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.animated-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.animated-btn:active {
-    transform: translateY(0);
-    transition: transform 0.1s;
-}
-
-.animated-input {
-    transition: all 0.3s ease;
-}
-
-.animated-input:focus {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.1);
-}
-
-.animated-select {
-    transition: all 0.3s ease;
-}
-
-.animated-select:focus {
-    transform: translateY(-1px);
-}
-
-/* Header */
+/* Header K-Pop */
 .header {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: var(--white);
     padding: 1rem;
     display: flex;
@@ -167,143 +136,97 @@ body {
     left: 0;
     right: 0;
     z-index: 100;
-    height: 60px;
+    height: 70px; /* Un poco más alto */
     animation: slideIn 0.5s ease-out;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.header h1 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
 }
 
 .menu-btn, .add-btn {
-    background: none;
-    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     color: var(--white);
     font-size: 1.5rem;
     cursor: pointer;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(5px);
 }
 
 .menu-btn:hover, .add-btn:hover {
-    background-color: rgba(255,255,255,0.1);
-    transform: rotate(90deg);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-.menu-btn:active, .add-btn:active {
-    transform: scale(0.9);
-}
-
-.header h1 {
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-/* Sidebar - WhatsApp Style */
+/* Sidebar K-Pop */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: 280px;
     height: 100%;
-    background-color: var(--white);
-    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    background: linear-gradient(180deg, #ffffff 0%, #f8f4ff 100%);
+    box-shadow: 4px 0 20px rgba(156, 39, 176, 0.2);
     z-index: 1000;
     display: flex;
     flex-direction: column;
     transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+    border-right: 3px solid var(--primary-light);
 }
 
 .sidebar.open {
     transform: translateX(0);
 }
 
-.menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.menu-overlay.show {
-    display: block;
-    opacity: 1;
-}
-
 .sidebar-header {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: var(--white);
-    padding: 1rem 1.2rem;
+    padding: 1.2rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-    height: 60px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    height: 70px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.2);
 }
 
 .sidebar-header h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-.close-menu {
-    background: none;
-    border: none;
-    color: var(--white);
     font-size: 1.2rem;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.close-menu:hover {
-    background-color: rgba(255,255,255,0.1);
-    transform: rotate(90deg);
-}
-
-/* Menu List - WhatsApp Style Compacto */
-.menu-list {
-    list-style: none;
-    padding: 0.5rem 0;
-    margin: 0;
-    flex: 1;
-    overflow-y: auto;
-    max-height: calc(100vh - 60px);
-}
-
-.menu-list li {
-    margin: 0;
-}
-
+/* Menu Items K-Pop */
 .menu-item {
     width: 100%;
-    padding: 0.9rem 1.2rem;
+    padding: 1rem 1.5rem;
     border: none;
-    background: none;
+    background: transparent;
     text-align: left;
     font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    color: #333;
+    color: #5a4b81;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    border-bottom: 1px solid #f0f0f0;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(156, 39, 176, 0.1);
     position: relative;
     overflow: hidden;
 }
@@ -314,72 +237,77 @@ body {
     left: 0;
     top: 0;
     height: 100%;
-    width: 4px;
-    background-color: var(--primary-color);
+    width: 5px;
+    background: var(--gradient-primary);
     transform: translateX(-100%);
     transition: transform 0.3s;
 }
 
 .menu-item:hover {
-    background-color: #f8f8f8;
-    padding-left: 1.5rem;
+    background: linear-gradient(90deg, rgba(156, 39, 176, 0.05) 0%, rgba(240, 98, 146, 0.05) 100%);
+    padding-left: 2rem;
+    color: var(--primary-color);
 }
 
 .menu-item:hover::before {
     transform: translateX(0);
 }
 
-.menu-item:active {
-    transform: scale(0.98);
+.menu-item i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+    color: var(--primary-color);
 }
 
 /* Main Content */
 .main-content {
-    margin-top: 60px;
-    padding: 1rem;
-    min-height: calc(100vh - 60px);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 70px;
+    padding: 1.5rem;
+    min-height: calc(100vh - 70px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 70px);
+    background: var(--light-bg);
 }
 
-.sidebar.open ~ .main-content {
-    transform: translateX(280px);
-}
-
+/* Welcome Screen K-Pop */
 .welcome-screen {
     text-align: center;
     padding: 3rem 1rem;
     max-width: 600px;
     margin: 0 auto;
     animation: fadeIn 1s ease-out;
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(156, 39, 176, 0.1);
 }
 
 .welcome-screen h2 {
-    color: var(--primary-color);
-    margin-bottom: 1rem;
-    font-size: 1.8rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 800;
     animation: slideIn 0.8s ease-out;
 }
 
-.welcome-screen p {
-    margin-bottom: 1rem;
-    color: var(--gray-dark);
-    animation: slideIn 1s ease-out;
-}
-
 .hint {
-    background-color: var(--primary-light);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 2rem !important;
-    border-left: 4px solid var(--primary-color);
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.1) 0%, rgba(240, 98, 146, 0.1) 100%);
+    padding: 1.2rem;
+    border-radius: 12px;
+    margin-top: 2.5rem !important;
+    border-left: 5px solid var(--secondary-color);
     animation: pulse 2s infinite;
+    color: #5a4b81;
 }
 
-/* Botón de tutorial */
-.tutorial-btn {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
+/* Botones K-Pop */
+.tutorial-btn, .save-btn, .add-member-btn, .add-event-btn {
+    background: var(--gradient-primary);
     color: white;
     border: none;
     padding: 1rem 2rem;
@@ -387,100 +315,34 @@ body {
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
-    margin-top: 2rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-.tutorial-btn:hover {
+.tutorial-btn:hover, .save-btn:hover, .add-member-btn:hover, .add-event-btn:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+    box-shadow: 0 6px 25px rgba(156, 39, 176, 0.4);
+    background: var(--gradient-secondary);
 }
 
-.tutorial-btn:active {
+.tutorial-btn:active, .save-btn:active, .add-member-btn:active, .add-event-btn:active {
     transform: translateY(0) scale(0.98);
 }
 
-/* Events Section */
-.events-section, .members-section, .attendance-section {
-    display: none;
-    height: 100%;
-}
-
-.events-section.show, .members-section.show, .attendance-section.show {
-    display: block;
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* Timeline */
-.year-section {
-    margin-bottom: 2rem;
-    animation: slideIn 0.5s ease-out;
-}
-
-.year-header {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 0.8rem 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.year-header:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.month-section {
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    display: none;
-}
-
-.month-section.show {
-    display: block;
-    animation: slideIn 0.5s ease-out;
-}
-
-.month-header {
-    background-color: var(--primary-light);
-    color: var(--primary-color);
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.month-header:hover {
-    transform: translateX(5px);
-}
-
-.day-events {
-    margin-left: 1rem;
-}
-
+/* Event Cards K-Pop */
 .event-card {
-    background-color: var(--white);
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 0.5rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 1.2rem;
+    margin-bottom: 1rem;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-card);
 }
 
 .event-card::before {
@@ -489,16 +351,18 @@ body {
     left: 0;
     top: 0;
     height: 100%;
-    width: 3px;
-    background-color: var(--primary-color);
+    width: 4px;
+    background: var(--gradient-primary);
     transform: scaleY(0);
     transition: transform 0.3s;
     transform-origin: top;
 }
 
 .event-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+    animation: glow 1.5s infinite;
 }
 
 .event-card:hover::before {
@@ -506,383 +370,176 @@ body {
     transform-origin: bottom;
 }
 
-.event-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.event-date {
-    font-size: 0.9rem;
-    color: var(--gray-dark);
-}
-
-.edit-event-btn {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    transition: all 0.3s;
-}
-
-.edit-event-btn:hover {
-    background-color: var(--primary-light);
-    transform: scale(1.1);
-}
-
-/* Members Section */
-.members-list {
-    display: grid;
-    gap: 1rem;
-    margin: 1rem 0;
-}
-
+/* Member Cards K-Pop */
 .member-card {
-    background-color: var(--white);
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    padding: 1rem;
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 1.2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     animation: slideIn 0.5s ease-out;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
 }
 
 .member-card:hover {
-    transform: translateX(5px);
+    transform: translateX(8px) scale(1.02);
     box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
 }
 
-.member-info h4 {
-    color: var(--primary-color);
-    margin-bottom: 0.25rem;
-}
-
-.member-role {
-    color: var(--gray-dark);
-    font-size: 0.9rem;
-}
-
-.member-actions button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 0.5rem;
-    color: var(--gray-dark);
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+.member-card::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    opacity: 0;
     transition: all 0.3s;
 }
 
-.member-actions button:hover {
-    color: var(--primary-color);
-    background-color: var(--primary-light);
-    transform: scale(1.1);
+.member-card:hover::after {
+    opacity: 0.1;
+    right: -10px;
 }
 
-.add-member-btn {
-    background-color: var(--primary-color);
+/* Year & Month Headers */
+.year-header {
+    background: var(--gradient-primary);
     color: var(--white);
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 1rem;
-    width: 100%;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.add-member-btn:hover {
-    background-color: #b91c1c;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.add-member-btn:active {
-    transform: translateY(0);
-}
-
-/* Attendance Section */
-.stats-filters {
-    display: flex;
-    gap: 1rem;
-    margin: 1rem 0;
-    flex-wrap: wrap;
-}
-
-.stats-filters select {
-    padding: 0.5rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 6px;
-    background-color: var(--white);
-    font-size: 0.9rem;
-}
-
-.stats-container {
-    display: grid;
-    gap: 1rem;
-}
-
-.stat-card {
-    background-color: var(--white);
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    padding: 1rem;
-    transition: all 0.3s ease;
-    animation: slideIn 0.5s ease-out;
-}
-
-.stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.stat-header {
-    color: var(--primary-color);
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.stat-details {
-    display: grid;
-    gap: 0.5rem;
-}
-
-.stat-item {
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-card);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.stat-item:hover {
-    transform: translateX(5px);
+.year-header:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    background: var(--gradient-secondary);
 }
 
-.stat-name {
-    font-weight: 500;
-}
-
-.stat-value {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-/* Modals */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+.month-header {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.1) 0%, rgba(240, 98, 146, 0.1) 100%);
+    color: var(--primary-dark);
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
+    margin-bottom: 0.8rem;
+    cursor: pointer;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    z-index: 1002;
-    animation: fadeIn 0.3s ease;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(156, 39, 176, 0.1);
 }
 
+.month-header:hover {
+    transform: translateX(8px);
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.15) 0%, rgba(240, 98, 146, 0.15) 100%);
+    border-color: var(--primary-light);
+}
+
+/* Modal K-Pop */
 .modal {
-    background-color: var(--white);
-    border-radius: 12px;
+    background: white;
+    border-radius: 20px;
     width: 90%;
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
     animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    box-shadow: 0 20px 40px rgba(156, 39, 176, 0.2);
+    border: 2px solid var(--primary-light);
 }
 
 .modal-header {
-    background-color: var(--primary-color);
+    background: var(--gradient-primary);
     color: var(--white);
     padding: 1.5rem;
-    border-radius: 12px 12px 0 0;
+    border-radius: 18px 18px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.2);
 }
 
-.close-modal {
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 1.2rem;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.close-modal:hover {
-    background-color: rgba(255,255,255,0.1);
-    transform: rotate(90deg);
-}
-
-.modal-content {
-    padding: 1.5rem;
-}
-
+/* Input Fields K-Pop */
 .input-field {
     width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid #e5e5e5;
-    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    border: 2px solid rgba(156, 39, 176, 0.2);
+    border-radius: 10px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    background: rgba(156, 39, 176, 0.02);
 }
 
 .input-field:focus {
     outline: none;
     border-color: var(--primary-color);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(156, 39, 176, 0.15);
+    background: white;
 }
 
-.members-checkbox {
-    margin-top: 1rem;
-}
-
-.members-checkbox h4 {
-    margin-bottom: 1rem;
-    color: var(--primary-color);
-}
-
-.checkbox-group {
-    display: grid;
-    gap: 0.5rem;
-}
-
+/* Checkbox K-Pop */
 .checkbox-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 4px;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    border-radius: 8px;
     transition: all 0.3s;
+    margin-bottom: 0.5rem;
+    border: 2px solid transparent;
 }
 
 .checkbox-item:hover {
-    background-color: var(--primary-light);
-    transform: translateX(5px);
+    background: linear-gradient(90deg, rgba(156, 39, 176, 0.05) 0%, rgba(240, 98, 146, 0.05) 100%);
+    transform: translateX(8px);
+    border-color: var(--primary-light);
 }
 
 .checkbox-item input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     transition: all 0.3s;
+    accent-color: var(--primary-color);
 }
 
 .checkbox-item input[type="checkbox"]:checked {
     transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
 }
 
-.checkbox-item label {
-    cursor: pointer;
-    flex: 1;
-    transition: all 0.3s;
-}
-
-.checkbox-item input[type="checkbox"]:checked + label {
-    color: var(--primary-color);
-    font-weight: 600;
-}
-
-.modal-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid #e5e5e5;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.save-btn {
-    background-color: var(--primary-color);
-    color: var(--white);
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.save-btn:hover {
-    background-color: #b91c1c;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.save-btn:active {
-    transform: translateY(0);
-}
-
-.delete-btn {
-    background-color: #ef4444;
-    color: var(--white);
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.delete-btn:hover {
-    background-color: #dc2626;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-}
-
-/* Tutorial Overlay */
-.tutorial-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    animation: fadeIn 0.5s ease;
-}
-
+/* Tutorial Card K-Pop */
 .tutorial-card {
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
-    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff, #f8f4ff);
+    border-radius: 25px;
     width: 90%;
     max-width: 500px;
-    padding: 2rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px rgba(156, 39, 176, 0.3);
     animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    border: 2px solid var(--primary-light);
 }
 
 .tutorial-card::before {
@@ -891,146 +548,158 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #dc2626, #b91c1c, #991b1b);
-}
-
-.tutorial-content {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.tutorial-content h3 {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    animation: slideIn 0.5s ease;
-}
-
-.tutorial-content p {
-    color: #555;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    animation: slideIn 0.5s ease 0.1s backwards;
+    height: 6px;
+    background: var(--gradient-primary);
 }
 
 .tutorial-content .emoji {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
-    animation: bounce 1s infinite;
+    animation: kpopBounce 1s infinite;
     display: block;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
-.tutorial-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
+/* Stats Cards */
+.stat-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    animation: slideIn 0.5s ease-out;
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
 }
 
-.tutorial-next-btn {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-    color: white;
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+}
+
+.stat-header {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(156, 39, 176, 0.1);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* Delete Button */
+.delete-btn {
+    background: linear-gradient(135deg, #ff4081, #f50057);
+    color: var(--white);
     border: none;
-    padding: 1rem 2rem;
-    border-radius: 12px;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 1rem;
-    font-weight: 600;
-    width: 100%;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.tutorial-next-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+.delete-btn:hover {
+    background: linear-gradient(135deg, #f50057, #c51162);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 0, 87, 0.3);
 }
 
-.tutorial-next-btn:active {
-    transform: translateY(0);
-}
-
-.tutorial-progress {
-    color: var(--gray-dark);
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.tutorial-skip-btn {
-    background: none;
-    border: none;
-    color: var(--gray-dark);
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-decoration: underline;
-    transition: color 0.3s;
-}
-
-.tutorial-skip-btn:hover {
+/* Botones de acción */
+.edit-event-btn, .member-actions button {
+    background: rgba(156, 39, 176, 0.1);
+    border: 2px solid rgba(156, 39, 176, 0.2);
     color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    transition: all 0.3s;
 }
 
-/* Elementos de animaciones especiales */
-.confetti-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3000;
+.edit-event-btn:hover, .member-actions button:hover {
+    background: var(--gradient-primary);
+    color: white;
+    border-color: transparent;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
 }
 
-.confetti {
-    position: absolute;
+/* Badges K-Pop */
+.role-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.role-leader {
+    background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+    color: white;
+}
+
+.role-vocal {
+    background: linear-gradient(135deg, #f06292, #ec407a);
+    color: white;
+}
+
+.role-dancer {
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+}
+
+.role-rapper {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
     width: 10px;
-    height: 10px;
-    background-color: var(--primary-color);
-    animation: confettiRain 3s linear forwards;
 }
 
-.sparkle {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, #ffd700, transparent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 3000;
-    animation: sparkle 1s infinite;
-    display: none;
+::-webkit-scrollbar-track {
+    background: rgba(156, 39, 176, 0.05);
+    border-radius: 10px;
 }
 
-/* Utility classes */
-.hidden {
-    display: none !important;
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
 }
 
-.show {
-    display: block !important;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-secondary);
 }
 
-.empty-state {
-    text-align: center;
-    padding: 2rem;
-    color: var(--gray-dark);
-    font-style: italic;
-    animation: fadeIn 0.5s ease;
-}
-
-/* Responsive */
-@media (min-width: 768px) {
-    .sidebar {
-        width: 250px;
+/* Responsive K-Pop */
+@media (max-width: 768px) {
+    .header {
+        height: 65px;
     }
     
-    .sidebar.open ~ .main-content {
-        transform: translateX(250px);
+    .header h1 {
+        font-size: 1.1rem;
     }
     
-    .menu-item {
-        padding: 0.85rem 1.2rem;
+    .main-content {
+        margin-top: 65px;
+        padding: 1rem;
+    }
+    
+    .welcome-screen h2 {
+        font-size: 1.6rem;
+    }
+    
+    .tutorial-card {
+        padding: 1.8rem;
+        width: 95%;
     }
 }
 
@@ -1044,30 +713,50 @@ body {
         transform: translateX(85%);
     }
     
-    .sidebar-header {
+    .event-card, .member-card, .stat-card {
         padding: 1rem;
-    }
-    
-    .menu-item {
-        padding: 0.85rem 1rem;
-        font-size: 0.95rem;
     }
     
     .modal {
         width: 95%;
-        margin: 1rem;
+        margin: 0.5rem;
     }
     
-    .modal-footer {
-        flex-direction: column;
+    .tutorial-btn, .save-btn, .add-member-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
     }
-    
-    .save-btn, .delete-btn {
-        width: 100%;
-    }
-    
-    .tutorial-card {
-        padding: 1.5rem;
-        width: 95%;
-    }
+}
+
+/* Efectos de luz K-Pop */
+.light-effect {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(156, 39, 176, 0.15), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Decoración de estrellas */
+.star {
+    position: absolute;
+    background: var(--white);
+    border-radius: 50%;
+    animation: sparkleStar 2s infinite;
+}
+
+/* Estilos para iconos */
+i.fas {
+    font-size: 1.1em;
+}
+
+/* Texto con gradiente */
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
 }
