@@ -3,157 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtCore Events PWA</title>
-    <meta name="theme-color" content="#dc2626">
+    <title>Eventos del Proyecto</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="icon-192x192.png">
+    <!-- Cambio del theme-color a rosa K-Pop -->
+    <meta name="theme-color" content="#FF2D78">
+    <meta name="description" content="Aplicación para gestionar eventos e integrantes del proyecto">
 </head>
 <body>
     <!-- Menú lateral -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h2>ArtCor Events</h2>
-            <button class="close-menu" id="closeMenu">✕</button>
+    <aside class="sidebar" id="sidebar">
+        <button class="close-menu-btn" id="closeMenuBtn">✕</button>
+        <h2>Menú</h2>
+        <div class="menu-section">
+            <h3>Eventos</h3>
+            <div id="eventosMenu"></div>
         </div>
-        <ul class="menu-list">
-            <li><button id="menuHome" class="menu-item">🏠 Inicio</button></li>
-            <li><button id="menuEvents" class="menu-item">📅 Eventos</button></li>
-            <li><button id="menuMembers" class="menu-item">👥 Integrantes</button></li>
-            <li><button id="menuAttendance" class="menu-item">📊 Asistencia</button></li>
-        </ul>
-    </nav>
-
-    <!-- Header -->
-    <header class="header">
-        <button class="menu-btn animated-btn" id="menuBtn">☰</button>
-        <h1>ArtCor Events</h1>
-        <button class="add-btn animated-btn" id="addBtn">+</button>
-    </header>
-
-    <!-- Contenido principal -->
-    <main class="main-content" id="mainContent">
-        <div class="welcome-screen" id="welcomeScreen">
-            <h2>Bienvenido a ArtCor Events</h2>
-            <p>Esta aplicación te ayuda a gestionar eventos y llevar el control de asistencia de los integrantes de tu proyecto.</p>
-            <p class="hint">Toca + para crear un nuevo evento</p>
-            
-            <!-- Botón para iniciar tutorial -->
-            <button class="tutorial-btn pulse-animation" id="startTutorial">
-                🎮 Iniciar Tutorial
-            </button>
+        <div class="menu-section">
+            <h3>Opciones</h3>
+            <ul class="menu-list">
+                <li><button id="menuIntegrantes">Integrantes</button></li>
+                <li><button id="menuEventos">Ver Todos los Eventos</button></li>
+                <li><button id="menuInicio">Inicio</button></li>
+                <li><button id="menuSalir">Salir</button></li>
+            </ul>
         </div>
+    </aside>
 
-        <!-- Sección de eventos -->
-        <div class="events-section hidden" id="eventsSection">
-            <div class="timeline" id="timeline"></div>
-        </div>
+    <!-- Overlay para menú -->
+    <div class="overlay" id="overlay"></div>
 
-        <!-- Sección de integrantes -->
-        <div class="members-section hidden" id="membersSection">
-            <h2>Integrantes del Proyecto</h2>
-            <div class="members-list" id="membersList"></div>
-            <button class="add-member-btn animated-btn" id="addMemberBtn">Agregar Integrante</button>
-        </div>
+    <!-- Contenedor principal -->
+    <main class="container">
+        <!-- Encabezado -->
+        <header class="header">
+            <button class="menu-btn" id="menuBtn">☰</button>
+            <h1 id="appTitle">Gestor de Eventos</h1>
+            <button class="add-btn" id="addEventBtn">+</button>
+        </header>
 
-        <!-- Sección de asistencia -->
-        <div class="attendance-section hidden" id="attendanceSection">
-            <h2>Estadísticas de Asistencia</h2>
-            <div class="stats-filters">
-                <select id="periodFilter" class="animated-select">
-                    <option value="all">General</option>
-                    <option value="year">Por Año</option>
-                    <option value="month">Por Mes</option>
-                </select>
-                <select id="yearFilter" class="hidden animated-select"></select>
-                <select id="monthFilter" class="hidden animated-select"></select>
-            </div>
-            <div class="stats-container" id="statsContainer"></div>
+        <!-- Contenido principal -->
+        <div class="content" id="content">
+            <!-- Vista de inicio (se muestra por defecto) -->
+            <section id="inicioView" class="view active">
+                <div class="welcome-card">
+                    <h2>Bienvenido al Gestor de Eventos</h2>
+                    <p>Esta aplicación te permite gestionar los eventos de tu proyecto y llevar un registro de asistencia de los integrantes.</p>
+                    <div class="instructions">
+                        <h3>¿Cómo usar la aplicación?</h3>
+                        <ul>
+                            <li><strong>Menú ☰</strong>: Accede a todos los eventos organizados por año y mes</li>
+                            <li><strong>Botón +</strong>: Crea un nuevo evento</li>
+                            <li><strong>Integrantes</strong>: Gestiona la lista de personas del proyecto</li>
+                        </ul>
+                    </div>
+                    <div class="call-to-action">
+                        <p class="hint">👆 Toca + para crear un nuevo evento</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vista de integrantes -->
+            <section id="integrantesView" class="view">
+                <div class="section-header">
+                    <h2>Integrantes del Proyecto</h2>
+                    <button class="add-btn-small" id="addIntegranteBtn">+ Integrante</button>
+                </div>
+                <div id="integrantesList"></div>
+            </section>
+
+            <!-- Vista de eventos -->
+            <section id="eventosView" class="view">
+                <div class="section-header">
+                    <h2>Todos los Eventos</h2>
+                </div>
+                <div id="eventosList"></div>
+            </section>
+
+            <!-- Vista de detalles de evento -->
+            <section id="detalleEventoView" class="view"></section>
+
+            <!-- Vista de edición de evento -->
+            <section id="editarEventoView" class="view"></section>
         </div>
     </main>
 
-    <!-- Modal para crear/editar evento -->
-    <div class="modal-overlay hidden" id="eventModalOverlay">
-        <div class="modal">
+    <!-- Modal para agregar/editar evento -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Nuevo Evento</h3>
-                <button class="close-modal animated-btn" id="closeEventModal">✕</button>
+                <h2 id="modalTitle">Nuevo Evento</h2>
+                <button class="close-modal-btn" id="closeModalBtn">✕</button>
             </div>
-            <div class="modal-content">
-                <input type="text" id="eventName" placeholder="Nombre del evento" class="input-field animated-input">
-                <input type="date" id="eventDate" class="input-field animated-input">
-                <div class="members-checkbox">
-                    <h4>Asistencia:</h4>
-                    <div id="attendanceCheckboxes"></div>
+            <form id="eventForm">
+                <div class="form-group">
+                    <label for="eventName">Nombre del Evento:</label>
+                    <input type="text" id="eventName" required>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="save-btn animated-btn" id="saveEventBtn">Guardar Evento</button>
-            </div>
+                <div class="form-group">
+                    <label for="eventDate">Fecha:</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Integrantes Asistentes:</label>
+                    <div id="asistentesList"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Guardar Evento</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <!-- Modal para agregar/editar integrante -->
-    <div class="modal-overlay hidden" id="memberModalOverlay">
-        <div class="modal">
+    <div class="modal" id="integranteModal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h3 id="memberModalTitle">Nuevo Integrante</h3>
-                <button class="close-modal animated-btn" id="closeMemberModal">✕</button>
+                <h2 id="modalIntegranteTitle">Nuevo Integrante</h2>
+                <button class="close-modal-btn" id="closeIntegranteModalBtn">✕</button>
             </div>
-            <div class="modal-content">
-                <input type="text" id="memberName" placeholder="Nombre" class="input-field animated-input">
-                <input type="text" id="memberRole" placeholder="Rol" class="input-field animated-input">
-                <input type="hidden" id="editMemberId">
-            </div>
-            <div class="modal-footer">
-                <button class="save-btn animated-btn" id="saveMemberBtn">Guardar Integrante</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para editar evento existente -->
-    <div class="modal-overlay hidden" id="editEventModalOverlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Editar Evento</h3>
-                <button class="close-modal animated-btn" id="closeEditEventModal">✕</button>
-            </div>
-            <div class="modal-content">
-                <input type="text" id="editEventName" placeholder="Nombre del evento" class="input-field animated-input">
-                <input type="date" id="editEventDate" class="input-field animated-input">
-                <div class="members-checkbox">
-                    <h4>Asistencia:</h4>
-                    <div id="editAttendanceCheckboxes"></div>
+            <form id="integranteForm">
+                <div class="form-group">
+                    <label for="integranteName">Nombre:</label>
+                    <input type="text" id="integranteName" required>
                 </div>
-                <input type="hidden" id="editEventId">
-            </div>
-            <div class="modal-footer">
-                <button class="save-btn animated-btn" id="updateEventBtn">Actualizar Evento</button>
-                <button class="delete-btn animated-btn" id="deleteEventBtn">Eliminar Evento</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tutorial Overlay -->
-    <div class="tutorial-overlay hidden" id="tutorialOverlay">
-        <div class="tutorial-card" id="tutorialCard">
-            <div class="tutorial-content" id="tutorialContent">
-                <!-- El contenido del tutorial se generará dinámicamente -->
-            </div>
-            <div class="tutorial-footer">
-                <button class="tutorial-next-btn animated-btn" id="nextTutorial">OK, ¡Entendido! 👌</button>
-                <div class="tutorial-progress">
-                    <span id="currentStep">1</span> / <span id="totalSteps">5</span>
+                <div class="form-group">
+                    <label for="integranteEmail">Email (opcional):</label>
+                    <input type="email" id="integranteEmail">
                 </div>
-                <button class="tutorial-skip-btn" id="skipTutorial">Saltar Tutorial</button>
-            </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">Guardar Integrante</button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <!-- Elementos para animaciones especiales -->
-    <div class="confetti-container" id="confettiContainer"></div>
-    <div class="sparkle" id="sparkle"></div>
 
     <script src="app.js"></script>
 </body>
