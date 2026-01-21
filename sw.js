@@ -11,6 +11,7 @@ const urlsToCache = [
   '/artcor-events/manifest.json',
   '/artcor-events/icon-144x144.png',
   '/artcor-events/icon-192x192.png',
+  '/artcor-events/icon-512x512.png',
   '/artcor-events/sw.js'
 ];
 
