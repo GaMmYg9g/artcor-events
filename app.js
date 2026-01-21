@@ -2,27 +2,9 @@
 class KpopEventsApp {
     constructor() {
         // Inicializar datos
-        this.members = JSON.parse(localStorage.getItem('kpop_members')) || [
-            { id: 1, name: "Jisoo", role: "Vocalista" },
-            { id: 2, name: "Jennie", role: "Rapera" },
-            { id: 3, name: "Rose", role: "Vocalista" },
-            { id: 4, name: "Lisa", role: "Bailarina" }
-        ];
+        this.members = JSON.parse(localStorage.getItem('kpop_members')) || [];
         
-        this.events = JSON.parse(localStorage.getItem('kpop_events')) || [
-            { 
-                id: 1, 
-                name: "Ensayo General", 
-                date: "2024-03-15",
-                attendees: [1, 2, 3, 4]
-            },
-            { 
-                id: 2, 
-                name: "Grabación MV", 
-                date: "2024-03-20",
-                attendees: [1, 3, 4]
-            }
-        ];
+        this.events = JSON.parse(localStorage.getItem('kpop_events')) || [];
         
         this.currentEventId = null;
         this.nextId = Math.max(...this.events.map(e => e.id), ...this.members.map(m => m.id), 0) + 1;
