@@ -3,158 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventos del Proyecto - K-Pop Style</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Eventos K-Pop</title>
+    <meta name="description" content="App para gestión de eventos y asistencia de integrantes">
+    <meta name="theme-color" content="#ff5a8c">
+    
+    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- ICONOS CORREGIDOS - RUTAS ABSOLUTAS -->
-    <link rel="icon" type="image/png" href="/icon-192x192.png">
-    <link rel="apple-touch-icon" href="/icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="144x144" href="/icon-144x144.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png">
-    
-    <!-- Theme color K-Pop -->
-    <meta name="theme-color" content="#FF2D78">
-    
-    <!-- Meta tags importantes para PWA -->
-    <meta name="description" content="Aplicación para gestionar eventos y control de asistencia con estilo K-Pop">
-    <meta name="application-name" content="Eventos K-Pop">
+    <!-- iOS Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Eventos K-Pop">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-TileColor" content="#FF2D78">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    <meta name="msapplication-tap-highlight" content="no">
+    
+    <!-- Iconos -->
+    <link rel="icon" href="icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Menú lateral -->
-    <aside class="sidebar" id="sidebar">
-        <button class="close-menu-btn" id="closeMenuBtn">✕</button>
-        <h2>Menú</h2>
-        <div class="menu-section">
-            <h3>Eventos</h3>
-            <div id="eventosMenu"></div>
+    <!-- Menú lateral estilo WhatsApp -->
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <div class="menu-avatar">KP</div>
+            <h2>Eventos K-Pop</h2>
+            <button class="close-menu" id="closeMenu">×</button>
         </div>
-        <div class="menu-section">
-            <h3>Opciones</h3>
-            <ul class="menu-list">
-                <li><button id="menuIntegrantes">Integrantes</button></li>
-                <li><button id="menuEventos">Ver Todos los Eventos</button></li>
-                <li><button id="menuInicio">Inicio</button></li>
-                <li><button id="menuSalir">Salir</button></li>
-            </ul>
+        
+        <div class="menu-items">
+            <div class="menu-section">
+                <h3>Eventos</h3>
+                <div class="event-tree" id="eventTree">
+                    <!-- Los eventos se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+            
+            <div class="menu-section">
+                <h3>Integrantes</h3>
+                <button class="menu-btn" id="manageMembers">
+                    <span>Gestionar Integrantes</span>
+                    <span>→</span>
+                </button>
+            </div>
+            
+            <div class="menu-section">
+                <h3>Asistencia</h3>
+                <button class="menu-btn" id="viewAttendance">
+                    <span>Ver Asistencia</span>
+                    <span>→</span>
+                </button>
+            </div>
+            
+            <div class="menu-section">
+                <button class="menu-btn exit-btn" id="exitApp">
+                    <span>Salir de la App</span>
+                    <span>×</span>
+                </button>
+            </div>
         </div>
-    </aside>
-
-    <!-- Overlay para menú -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Contenedor principal -->
-    <main class="container">
-        <!-- Encabezado -->
-        <header class="header">
-            <button class="menu-btn" id="menuBtn">☰</button>
-            <h1 id="appTitle">Gestor de Eventos K-Pop</h1>
-            <button class="add-btn" id="addEventBtn">+</button>
-        </header>
-
-        <!-- Contenido principal -->
-        <div class="content" id="content">
-            <!-- Vista de inicio (se muestra por defecto) -->
-            <section id="inicioView" class="view active">
-                <div class="welcome-card">
-                    <h2>Bienvenido al Gestor de Eventos K-Pop</h2>
-                    <p>Esta aplicación te permite gestionar los eventos de tu proyecto y llevar un registro de asistencia de los integrantes.</p>
-                    <div class="instructions">
-                        <h3>¿Cómo usar la aplicación?</h3>
-                        <ul>
-                            <li><strong>Menú ☰</strong>: Accede a todos los eventos organizados por año y mes</li>
-                            <li><strong>Botón +</strong>: Crea un nuevo evento</li>
-                            <li><strong>Integrantes</strong>: Gestiona la lista de personas del proyecto</li>
-                        </ul>
+    </div>
+    
+    <!-- Overlay para el menú -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    
+    <!-- Encabezado principal -->
+    <header class="app-header">
+        <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <h1>Eventos K-Pop</h1>
+        <button class="add-btn" id="addEventBtn">+</button>
+    </header>
+    
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Vista de inicio -->
+        <section class="welcome-section" id="welcomeSection">
+            <div class="welcome-card">
+                <div class="welcome-icon">🎤</div>
+                <h2>Bienvenido a Eventos K-Pop</h2>
+                <p>Esta aplicación te ayuda a gestionar eventos y llevar el control de asistencia de los integrantes de tu proyecto K-Pop.</p>
+                <div class="feature-list">
+                    <div class="feature">
+                        <span>✓</span>
+                        <p>Registra eventos con fecha y participantes</p>
                     </div>
-                    <div class="call-to-action">
-                        <p class="hint">👆 Toca + para crear un nuevo evento</p>
+                    <div class="feature">
+                        <span>✓</span>
+                        <p>Gestiona la base de datos de integrantes</p>
+                    </div>
+                    <div class="feature">
+                        <span>✓</span>
+                        <p>Visualiza estadísticas de asistencia</p>
+                    </div>
+                    <div class="feature">
+                        <span>✓</span>
+                        <p>Organiza eventos por año, mes y día</p>
                     </div>
                 </div>
-            </section>
-
-            <!-- Vista de integrantes -->
-            <section id="integrantesView" class="view">
-                <div class="section-header">
-                    <h2>Integrantes del Proyecto</h2>
-                    <button class="add-btn-small" id="addIntegranteBtn">+ Integrante</button>
-                </div>
-                <div id="integrantesList"></div>
-            </section>
-
-            <!-- Vista de eventos -->
-            <section id="eventosView" class="view">
-                <div class="section-header">
-                    <h2>Todos los Eventos</h2>
-                </div>
-                <div id="eventosList"></div>
-            </section>
-
-            <!-- Vista de detalles de evento -->
-            <section id="detalleEventoView" class="view"></section>
-
-            <!-- Vista de edición de evento -->
-            <section id="editarEventoView" class="view"></section>
-        </div>
+                <p class="hint">Toca <strong>+</strong> para crear un nuevo evento</p>
+            </div>
+        </section>
+        
+        <!-- Lista de eventos -->
+        <section class="events-section" id="eventsSection" style="display: none;">
+            <h2>Eventos Recientes</h2>
+            <div class="events-list" id="eventsList">
+                <!-- Los eventos se cargarán aquí dinámicamente -->
+            </div>
+        </section>
     </main>
-
-    <!-- Modal para agregar/editar evento -->
+    
+    <!-- Modal para crear/editar evento -->
     <div class="modal" id="eventModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">Nuevo Evento</h2>
-                <button class="close-modal-btn" id="closeModalBtn">✕</button>
+                <button class="close-modal" id="closeModal">×</button>
             </div>
             <form id="eventForm">
                 <div class="form-group">
-                    <label for="eventName">Nombre del Evento:</label>
-                    <input type="text" id="eventName" required>
+                    <label for="eventName">Nombre del Evento</label>
+                    <input type="text" id="eventName" placeholder="Ej: Ensayo General" required>
                 </div>
+                
                 <div class="form-group">
-                    <label for="eventDate">Fecha:</label>
+                    <label for="eventDate">Fecha</label>
                     <input type="date" id="eventDate" required>
                 </div>
+                
                 <div class="form-group">
-                    <label>Integrantes Asistentes:</label>
-                    <div id="asistentesList"></div>
+                    <label>Integrantes Asistentes</label>
+                    <div class="members-checklist" id="membersChecklist">
+                        <!-- Los integrantes se cargarán aquí dinámicamente -->
+                    </div>
                 </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-save">Guardar Evento</button>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn cancel-btn" id="cancelEvent">Cancelar</button>
+                    <button type="submit" class="btn save-btn">Guardar Evento</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <!-- Modal para agregar/editar integrante -->
-    <div class="modal" id="integranteModal">
+    
+    <!-- Modal para gestionar integrantes -->
+    <div class="modal" id="membersModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalIntegranteTitle">Nuevo Integrante</h2>
-                <button class="close-modal-btn" id="closeIntegranteModalBtn">✕</button>
+                <h2>Gestionar Integrantes</h2>
+                <button class="close-modal" id="closeMembersModal">×</button>
             </div>
-            <form id="integranteForm">
-                <div class="form-group">
-                    <label for="integranteName">Nombre:</label>
-                    <input type="text" id="integranteName" required>
+            
+            <div class="members-management">
+                <form id="addMemberForm">
+                    <div class="form-row">
+                        <input type="text" id="memberName" placeholder="Nombre del integrante" required>
+                        <input type="text" id="memberRole" placeholder="Rol (Ej: Vocalista)" required>
+                        <button type="submit" class="btn add-member-btn">Agregar</button>
+                    </div>
+                </form>
+                
+                <div class="members-list" id="membersList">
+                    <!-- Los integrantes se cargarán aquí dinámicamente -->
                 </div>
-                <div class="form-group">
-                    <label for="integranteEmail">Email (opcional):</label>
-                    <input type="email" id="integranteEmail">
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn-save">Guardar Integrante</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-
+    
+    <!-- Modal para ver asistencia -->
+    <div class="modal" id="attendanceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Estadísticas de Asistencia</h2>
+                <button class="close-modal" id="closeAttendanceModal">×</button>
+            </div>
+            
+            <div class="attendance-stats">
+                <div class="stats-filters">
+                    <button class="filter-btn active" data-filter="all">General</button>
+                    <button class="filter-btn" data-filter="year">Por Año</button>
+                    <button class="filter-btn" data-filter="month">Por Mes</button>
+                </div>
+                
+                <div class="stats-content" id="statsContent">
+                    <!-- Las estadísticas se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
     <script src="app.js"></script>
 </body>
 </html>
