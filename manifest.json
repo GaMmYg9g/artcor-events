@@ -1,26 +1,24 @@
 {
-    "name": "Gestor de Eventos ArCor",
-    "short_name": "ArtCor-Events",
-    "description": "Aplicación para gestionar eventos y control de asistencia con estilo K-Pop",
-    "start_url": "/",
-    "scope": "/",
-    "display": "standalone",
-    "background_color": "#F8F0FF",
-    "theme_color": "#FF2D78",
-    "orientation": "portrait",
-    "icons": [
-        {
-            "src": "/icon-144x144.png",
-            "sizes": "144x144",
-            "type": "image/png"
-        },
-        {
-            "src": "/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        }
-    ],
-    "categories": ["productivity", "utilities"],
-    "lang": "es",
-    "dir": "ltr"
+  "name": "Eventos K-Pop",
+  "short_name": "K-Pop Events",
+  "description": "App para gestión de eventos y asistencia de integrantes K-Pop",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff5a8c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "lang": "es"
 }
