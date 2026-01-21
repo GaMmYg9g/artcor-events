@@ -17,10 +17,10 @@ class ArtCorEventsApp {
     }
     
     init() {
-        // Registrar Service Worker - CORREGIDA RUTA
+        // Registrar Service Worker - RUTA CORREGIDA (relativa)
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/artcor-events/sw.js', {
-                scope: '/artcor-events/'
+            navigator.serviceWorker.register('sw.js', {
+                scope: './'
             })
             .then(registration => {
                 console.log('Service Worker registrado con éxito:', registration.scope);
@@ -822,7 +822,10 @@ class ArtCorEventsApp {
 // Inicializar la aplicación cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar si estamos en la ruta correcta de GitHub Pages
-    if (!window.location.pathname.includes('artcor-events')) {
+    const currentPath = window.location.pathname;
+    const isCorrectPath = currentPath === '/' || currentPath.includes('artcor-events');
+    
+    if (!isCorrectPath) {
         console.log('Redirigiendo a la ruta correcta de la PWA...');
         window.location.href = '/artcor-events/';
         return;
