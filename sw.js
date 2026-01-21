@@ -1,18 +1,18 @@
 // Nombre de la caché - versión específica
-const CACHE_NAME = 'artcor-events-v2.0.1';
+const CACHE_NAME = 'artcor-events-v2.0.2';
 const STATIC_CACHE = 'static-artcor-v1';
 
-// Archivos a cachear - rutas ABSOLUTAS para GitHub Pages
+// Archivos a cachear - rutas RELATIVAS
 const urlsToCache = [
-  '/artcor-events/',
-  '/artcor-events/index.html',
-  '/artcor-events/style.css',
-  '/artcor-events/app.js',
-  '/artcor-events/manifest.json',
-  '/artcor-events/icon-144x144.png',
-  '/artcor-events/icon-192x192.png',
-  '/artcor-events/icon-512x512.png',
-  '/artcor-events/sw.js'
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  './icon-144x144.png',
+  './icon-192x192.png',
+  './icon-512x512.png',
+  './sw.js'
 ];
 
 // Instalar Service Worker
@@ -57,8 +57,8 @@ self.addEventListener('activate', event => {
 
 // Estrategia: Cache First, luego Network
 self.addEventListener('fetch', event => {
-  // Solo manejar solicitudes GET y del mismo origen (artcor-events)
-  if (event.request.method !== 'GET' || !event.request.url.includes('artcor-events')) {
+  // Solo manejar solicitudes GET y del mismo origen
+  if (event.request.method !== 'GET') {
     return;
   }
 
@@ -91,13 +91,12 @@ self.addEventListener('fetch', event => {
           .catch(error => {
             console.error('[Service Worker] Error en fetch:', error);
             // Puedes devolver una página offline aquí si lo deseas
-            // return caches.match('/artcor-events/offline.html');
           });
       })
   );
 });
 
-// Manejar mensajes desde la app (opcional)
+// Manejar mensajes desde la app
 self.addEventListener('message', event => {
   if (event.data.action === 'skipWaiting') {
     self.skipWaiting();
