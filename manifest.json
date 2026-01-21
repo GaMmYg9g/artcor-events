@@ -2,23 +2,32 @@
   "name": "ArtCor Events",
   "short_name": "ArtCor-Events",
   "description": "App para gestión de eventos y asistencia de los miembros de ArtCor",
-  "start_url": "/",
+  "start_url": "/artcor-events/",
+  "scope": "/artcor-events/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ff5a8c",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-192x192.png",
+      "src": "/artcor-events/icon-192x192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/artcor-events/icon-144x144.png",
+      "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png"
+      "src": "/artcor-events/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "categories": ["productivity", "utilities"],
-  "lang": "es"
+  "lang": "es",
+  "dir": "ltr"
 }
