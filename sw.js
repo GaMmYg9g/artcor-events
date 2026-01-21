@@ -1,5 +1,5 @@
 // Nombre de la caché
-const CACHE_NAME = 'kpop-events-v1';
+const CACHE_NAME = 'artcor-events-v1';
 
 // Archivos a cachear
 const urlsToCache = [
