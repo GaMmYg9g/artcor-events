@@ -21,7 +21,7 @@
     
     <!-- Estilos - RUTA ABSOLUTA -->
     <link rel="stylesheet" href="/artcor-events/style.css">
-    
+    <link rel="manifest" href="/artcor-events/manifest.json?v=2">
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -244,6 +244,26 @@
                 window.location.href = '/artcor-events/';
             }
         });
-    </script>
+
+
+// Forzar limpieza al cargar
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    for(let registration of registrations) {
+                        registration.unregister();
+                    }
+                }),
+
+    
+    // Limpiar caches
+            if ('caches' in window) {
+                caches.keys().then(cacheNames => {
+                    cacheNames.forEach(cacheName => {
+                        caches.delete(cacheName);
+                    });
+                });
+            }
+        }
+        </script>
 </body>
 </html>
