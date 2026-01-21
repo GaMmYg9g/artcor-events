@@ -9,9 +9,8 @@ const urlsToCache = [
   '/artcor-events/style.css',
   '/artcor-events/app.js',
   '/artcor-events/manifest.json',
-  '/artcor-events/icon-144x144.png',
-  '/artcor-events/icon-192x192.png',
-  '/artcor-events/icon-512x512.png',
+  '/icon-144x144.png',
+  '/icon-192x192.png',
   '/artcor-events/sw.js'
 ];
 
