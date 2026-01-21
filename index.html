@@ -7,29 +7,63 @@
     <meta name="description" content="App para gestión de eventos y asistencia de integrantes">
     <meta name="theme-color" content="#ff5a8c">
     
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json">
+    <!-- PWA Manifest - RUTA ABSOLUTA -->
+    <link rel="manifest" href="/artcor-events/manifest.json">
     
     <!-- iOS Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Eventos K-Pop">
+    <meta name="apple-mobile-web-app-title" content="ArtCor Events">
     
-    <!-- Iconos -->
-    <link rel="icon" href="icon-192x192.png" type="image/png">
-    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <!-- Iconos - RUTAS ABSOLUTAS -->
+    <link rel="icon" href="/artcor-events/icon-192x192.png" type="image/png">
+    <link rel="apple-touch-icon" href="/artcor-events/icon-192x192.png">
     
-    <!-- Estilos -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Estilos - RUTA ABSOLUTA -->
+    <link rel="stylesheet" href="/artcor-events/style.css">
     
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Registro del Service Worker -->
+    <script>
+        // Registrar Service Worker cuando la página cargue
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/artcor-events/sw.js', {
+                    scope: '/artcor-events/'
+                }).then(function(registration) {
+                    console.log('ServiceWorker registrado exitosamente con scope: ', registration.scope);
+                    
+                    // Verificar actualizaciones
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        console.log('Nueva versión del Service Worker encontrada');
+                        
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    // Nueva versión disponible
+                                    console.log('Nueva versión disponible. Mostrando notificación...');
+                                    if (confirm('¡Nueva versión disponible! ¿Recargar para actualizar?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }).catch(function(error) {
+                    console.log('Error al registrar ServiceWorker: ', error);
+                });
+            });
+        }
+    </script>
 </head>
 <body>
     <!-- Menú lateral estilo WhatsApp -->
     <div class="side-menu" id="sideMenu">
         <div class="menu-header">
-            <div class="menu-avatar">KP</div>
+            <div class="menu-avatar">AC</div>
             <h2>ArtCor-Events</h2>
             <button class="close-menu" id="closeMenu">×</button>
         </div>
@@ -43,7 +77,7 @@
             </div>
             
             <div class="menu-section">
-                <h3Miembros</h3>
+                <h3>Miembros</h3>
                 <button class="menu-btn" id="manageMembers">
                     <span>Gestionar Miembros</span>
                     <span>→</span>
@@ -132,7 +166,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Miembros que Asistentieron</label>
+                    <label>Miembros que Asistieron</label>
                     <div class="members-checklist" id="membersChecklist">
                         <!-- Los integrantes se cargarán aquí dinámicamente -->
                     </div>
@@ -192,7 +226,24 @@
         </div>
     </div>
     
-    <!-- Scripts -->
-    <script src="app.js"></script>
+    <!-- Scripts - RUTA ABSOLUTA -->
+    <script src="/artcor-events/app.js"></script>
+    
+    <!-- Script para detección de PWA instalada -->
+    <script>
+        // Detectar si la PWA está instalada
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('PWA instalada y ejecutándose en modo standalone');
+                document.body.classList.add('pwa-installed');
+            }
+            
+            // Verificar que estamos en la ruta correcta
+            if (!window.location.pathname.includes('artcor-events')) {
+                console.warn('La PWA no está en la ruta correcta. Redirigiendo...');
+                window.location.href = '/artcor-events/';
+            }
+        });
+    </script>
 </body>
 </html>
